@@ -26,15 +26,17 @@ class InvoiceDetailsNotifier extends StateNotifier<List<Invoice>>{
   final InvoiceRepository invoiceRepository;
 InvoiceDetailsNotifier(super.state, this.invoiceRepository);
 
+  //
+  //
+  // Future<void> createInvoice(Invoice invoice) async {
+  //   print("$state  create");
+  //   print("$invoice.userId id checking");
+  //   await invoiceRepository.invoice(invoice);
+  // }
 
+  Future<void> getInvoice(int id)async {
+    state = (await invoiceRepository.getInvoice(id))!;
 
-  Future<void> createInvoice(Invoice invoice) async {
-    print("$state  create");
-    await invoiceRepository.invoice(invoice);
-  }
-
-  Future<void> getInvoice()async {
-    state = (await invoiceRepository.getInvoice())!;
 
   }
 
@@ -63,8 +65,7 @@ InvoiceDetailsNotifier(super.state, this.invoiceRepository);
 
   Future<void> deleteById(String inId) async {
     await invoiceRepository.deleteInvoice(inId);
-    // Fetch the updated list of invoices after deletion
-    await getInvoice();
+    await getInvoices();
   }
 
 Future<void> updateInvoice(Invoice editInvoice,String iId) async {

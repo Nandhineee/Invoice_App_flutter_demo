@@ -121,7 +121,6 @@ class _BusinessInfoState extends ConsumerState<BusinessInfo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // Invoice Number Field with Text and Star Symbol
                           RichText(
                             text: const TextSpan(
                               children: [
@@ -250,7 +249,7 @@ class _BusinessInfoState extends ConsumerState<BusinessInfo> {
                                 border: InputBorder.none,
                                 hintText: 'Enter business phone number',
                               ),
-                              keyboardType: TextInputType.phone, // Suggests a numeric input keyboard
+                              keyboardType: TextInputType.phone,
                               style: const TextStyle(fontSize: 16.0),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -294,8 +293,7 @@ class _BusinessInfoState extends ConsumerState<BusinessInfo> {
                               color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(5.0),
                             ),
-                            child: // For Address Line 1
-                            TextFormField(
+                            child: TextFormField(
 
                               controller:_businessBillingController,
                               decoration: const InputDecoration(
@@ -315,7 +313,6 @@ class _BusinessInfoState extends ConsumerState<BusinessInfo> {
 
 
                           const SizedBox(height: 20.0),
-                          // Create Date Field
                           RichText(
                             text: const TextSpan(
                               children: [
@@ -355,7 +352,6 @@ class _BusinessInfoState extends ConsumerState<BusinessInfo> {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter the business website';
                                 }
-                                // Optional: Add specific validation for website URL format if required
                                 return null;
                               },
                             ),

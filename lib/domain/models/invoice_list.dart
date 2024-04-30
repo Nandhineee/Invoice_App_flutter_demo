@@ -1,6 +1,7 @@
 const String invoiceTableName = 'invoice';
 const String invoiceId = 'invoiceId';
 const String invoiceTableId = 'tableId';
+const String id='userId';
 const String invoiceCreateName = 'invoiceName';
 const String invoicePrice = 'price';
 const String invoicePaid = 'paid';
@@ -24,6 +25,7 @@ const String invoiceShipping = 'shipping';
 class Invoice {
   String id;
   int tableId;
+  int userId;
   String invoiceName;
   String price;
   bool paid;
@@ -47,6 +49,7 @@ class Invoice {
   Invoice(
       this.id,
       this.tableId,
+      this.userId,
       this.invoiceName,
       this.price,
       this.paid,
@@ -71,6 +74,7 @@ class Invoice {
     return Invoice(
       json['invoiceId'],
       json['tableId'],
+      json['userId'],
       json['invoiceName'],
       json['price'],
       json['paid'] == 1 ? true : false,
@@ -95,6 +99,7 @@ class Invoice {
 
   Map<String, dynamic> toJson() {
     return {
+      "userId": userId,
       'invoiceId': id,
       'invoiceName': invoiceName,
       'price': price,
@@ -123,6 +128,7 @@ List<Invoice> invoice = [
   Invoice(
       'INV456',
       01,
+      1,
       'Project Launch Invoice',
       '8999',
         true,
@@ -146,9 +152,10 @@ List<Invoice> invoice = [
   Invoice(
     'INV789',
     02,
+    2,
     'Consulting & Hardware Invoice',
     '6734',
-    false,
+    true,
     DateTime(2024, 5, 1),
     DateTime(2024, 6, 1),
     'Net 30 Days',
@@ -169,6 +176,7 @@ List<Invoice> invoice = [
   Invoice(
     'INV003',
     03,
+    2,
     'Web Hosting & Cybersecurity Invoice',
     '8901',
     false,
@@ -192,6 +200,7 @@ List<Invoice> invoice = [
   Invoice(
     'INV004',
     04,
+    3,
     'Marketing & Branding Services Invoice',
     '9022',
     true,

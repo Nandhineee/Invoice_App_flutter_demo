@@ -17,7 +17,7 @@ final invoiceInfoRepositoryProvider = Provider((ref) {
 final invoiceInfoProvider = StateNotifierProvider((ref) {
   InvoiceRepository invoiceRepository = ref.read(invoiceInfoRepositoryProvider);
   return InvoiceInfoNotifier(
-      Invoice("", 0, "", "", true, DateTime.now(), DateTime.now(), "", "", "",
+      Invoice("", 0,0, "", "", false, DateTime.now(), DateTime.now(), "", "", "",
           0, "", "", "", "", "", 0, "", "", "", ""),
       invoiceRepository);
 });
@@ -32,6 +32,7 @@ class InvoiceInfoNotifier extends StateNotifier<Invoice> {
   void getInvoiceInfo(String id, String invoiceName, DateTime createdDate,
       DateTime dueDate, String dueTerms) {
     state.id = id;
+
 
     state.invoiceName = invoiceName;
     state.createdDate = createdDate;
@@ -102,8 +103,16 @@ class InvoiceInfoNotifier extends StateNotifier<Invoice> {
   }
 
 
+  //
+  Future<void> createInvoice(int uid)async {
 
-  Future<void> createInvoice()async {
-   await invoiceRepository.invoice(state);
+      state.userId = uid;
+      print("User ID updated to: ${state.userId}");
+      await invoiceRepository.invoice(state);
+
+
+    print(state.toJson().toString() );
+    print("create checking");
+
   }
 }

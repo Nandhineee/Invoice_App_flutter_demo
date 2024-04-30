@@ -265,55 +265,6 @@ class ItemInfoState extends State<ItemInfo> {
                               },
                             ),
                           ),
-                          //
-                          // SizedBox(height: 20.0),
-                          // // Create Date Field
-                          // RichText(
-                          //   text: const TextSpan(
-                          //     children: [
-                          //       TextSpan(
-                          //         text: "Unit of Measure",
-                          //         style: TextStyle(
-                          //           fontSize: 15.0,
-                          //           color: Colors.black,
-                          //         ),
-                          //       ),
-                          //       TextSpan(
-                          //         text: "*",
-                          //         style: TextStyle(
-                          //           fontSize: 15.0,
-                          //           color: Colors.red,
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          // SizedBox(height: 10.0),
-                          // Container(
-                          //   padding: EdgeInsets.all(8.0),
-                          //   width: 400,
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.grey[200],
-                          //     borderRadius: BorderRadius.circular(5.0),
-                          //   ),
-                          //   child: TextFormField(
-                          //     controller: _itemMeasureController,
-                          //     decoration: const InputDecoration(
-                          //       border: InputBorder.none,
-                          //       hintText: 'None',
-                          //     ),
-                          //     style: TextStyle(fontSize: 16.0),
-                          //     // Validator for Unit of Measure
-                          //     validator: (value) {
-                          //
-                          //       if (value == null || value.isEmpty) {
-                          //         return 'Please enter the unit of measure';
-                          //       }
-                          //       return null;
-                          //     },
-                          //
-                          //   ),
-                          // ),
 
                           const SizedBox(height: 20.0),
                           // Create Date Field
@@ -411,37 +362,7 @@ class ItemInfoState extends State<ItemInfo> {
                                   return null;
                                 }),
                           ),
-                          // Existing widgets...
 
-                          // SizedBox(height: 20.0),
-                          // Container(
-                          //   padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0), // Add padding inside the container
-                          //   width: 400.0,
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.blue[900], // Set the color of the container to blue
-                          //     borderRadius: BorderRadius.circular(5.0),
-                          //   ),
-                          //   // child: Row(
-                          //   //   mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space out child widgets as much as possible
-                          //   //   children: <Widget>[
-                          //   //     Text(
-                          //   //       'Amount',
-                          //   //       style: TextStyle(
-                          //   //         fontSize: 16.0,
-                          //   //         color: Colors.white, // Set text color to white for better contrast
-                          //   //       ),
-                          //   //     ),
-                          //   //     Text(
-                          //   //       '$itemPrice*$quantity', // Use the Rupees symbol
-                          //   //       style: TextStyle(
-                          //   //         fontSize: 16.0,
-                          //   //         color: Colors.white, // Set text color to white for better contrast
-                          //   //       ),
-                          //   //     ),
-                          //   //   ],
-                          //   // ),
-                          // ),
-                          //
 
                           const SizedBox(height: 20.0),
                           RichText(

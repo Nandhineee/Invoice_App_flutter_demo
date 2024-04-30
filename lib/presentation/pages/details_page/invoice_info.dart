@@ -43,20 +43,15 @@ class _InvoiceInfoState extends ConsumerState<InvoiceInfo> {
   final _formKey = GlobalKey<FormState>();
 
   DateTime _selectedDate = DateTime.now();
+  DateTime _endedDate = DateTime.now();
 
   String get getDate {
     return DateFormat('yyyy-MM-dd').format(_selectedDate);
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   _dateController.dispose();
-  //   _duedatecontroller.dispose();
-  //   _duecontroller.dispose();
-  //   _invoiceTitleController.dispose();
-  //   super.dispose();
-  // }
+  String get endedDate{
+    return DateFormat('yyyy-MM-dd').format(_endedDate);
+  }
 
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -175,7 +170,6 @@ class _InvoiceInfoState extends ConsumerState<InvoiceInfo> {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter the invoice number';
                                 }
-                                // Add more specific validation logic here if needed
                                 return null;
                               },
                             ),
@@ -402,7 +396,6 @@ class _InvoiceInfoState extends ConsumerState<InvoiceInfo> {
       setState(() {
         _selectedDate = selectedDate;
         _dateController.text = getDate;
-        _duedatecontroller.text = getDate;
       });
     }
   }
@@ -410,16 +403,15 @@ class _InvoiceInfoState extends ConsumerState<InvoiceInfo> {
   Future<void> endDatePicker() async {
     final endDate = await showDatePicker(
         context: context,
-        initialDate: _selectedDate,
+        initialDate: _endedDate,
 
-        firstDate: DateTime(2010, 4, 1),
-        lastDate: DateTime.now());
+        firstDate: _selectedDate,
+        lastDate: DateTime(2025, 12, 30));
 
     if (endDate != null) {
       setState(() {
-        _selectedDate = endDate;
-        _dateController.text = getDate;
-        _duedatecontroller.text = getDate;
+        _endedDate = endDate;
+        _duedatecontroller.text = endedDate;
       });
     }
   }

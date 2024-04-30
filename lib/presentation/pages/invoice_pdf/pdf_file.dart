@@ -256,7 +256,7 @@ class _InvoicePdfState extends State<InvoicePdf> {
                   pw.Text('Items',
                       style: pw.TextStyle(
                           fontSize: 18, color: PdfColor.fromRYB(0, 0, 1))),
-                  pw.Text('Price',
+                  pw.Text('Quantity x Price',
                       style: pw.TextStyle(
                           fontSize: 18, color: PdfColor.fromRYB(0, 0, 1))),
                 ],
@@ -277,11 +277,30 @@ class _InvoicePdfState extends State<InvoicePdf> {
                 },
               ),
 
-                pw.Divider(),
-                pw.Text('Discount: \$$discount'),
-                pw.Text('Tax: \$$tax'),
-                pw.Text('Shipping: \$$shipping'),
-                pw.Divider(),
+              pw.Divider(),
+              pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text('Discount: \$${discount}',
+                    style: pw.TextStyle(fontSize: 14)),
+              ),
+              pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text('Tax: \$${tax}',
+                    style: pw.TextStyle(fontSize: 14)),
+              ),
+              pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text('Shipping: \$${shipping}',
+                    style: pw.TextStyle(fontSize: 14)),
+              ),
+              pw.Divider(),
+              pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(
+                  'Total: \$${(itemsList.fold(0.0, (double total, item) => total + item.price * item.quantity) - (double.tryParse(discount) ?? 0) + (double.tryParse(tax) ?? 0) + (double.tryParse(shipping) ?? 0)).toStringAsFixed(2)}',
+                  style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+                ),
+              ),
               pw.Align(
                 alignment: pw.Alignment.centerRight,
                 child: pw.Text(
@@ -415,7 +434,7 @@ class _InvoicePdfState extends State<InvoicePdf> {
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black, // Default text color for labels
+                        color: Colors.black,
                       ),
                       children: <TextSpan>[
                         const TextSpan(text: 'Business Website: '),
@@ -481,13 +500,19 @@ class _InvoicePdfState extends State<InvoicePdf> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(itemsList[index].name),
-                        subtitle: Text('Quantity: ${itemsList[index].price}'),
-                        trailing: Text('\$${itemsList[index].quantity}'),
+                        subtitle: Text(
+                          'Quantity: ${itemsList[index].price}',
+                          style: TextStyle(
+                            color: Colors.blue, // Sets the text color to blue
+                          ),
+                        ),
+
+                          trailing: Text('\$${itemsList[index].quantity}'),
                       );
                     },
                   ),
                   const Divider(),
-// Discounts, Tax, and Shipping
+
                   Align(
                     alignment: Alignment.centerRight,
                     child: Column(

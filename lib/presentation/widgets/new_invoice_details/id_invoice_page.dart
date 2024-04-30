@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:invoice/domain/models/invoice_list.dart';
 import 'package:invoice/domain/models/item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:invoice/presentation/pages/details_page/item_info.dart';
 import 'package:invoice/presentation/pages/invoice_pdf/pdf_file.dart';
 import 'package:invoice/presentation/providers/invoice_info_provider.dart';
+import 'package:invoice/presentation/providers/localizations_provider.dart';
+
 
 import 'package:invoice/presentation/providers/invoice_provider.dart';
 import 'package:invoice/presentation/providers/item_provider.dart';
@@ -14,6 +17,9 @@ import 'package:invoice/presentation/providers/item_provider.dart';
 import '../../pages/details_page/business_info.dart';
 import '../../pages/details_page/client_info.dart';
 import '../../pages/details_page/invoice_info.dart';
+import '../../providers/user_provider.dart';
+
+//315 app localisation
 
 class Idinfo extends ConsumerStatefulWidget {
   const Idinfo({super.key});
@@ -24,13 +30,13 @@ class Idinfo extends ConsumerStatefulWidget {
 
 class _IdinfoState extends ConsumerState<Idinfo> {
   late List<Invoice> invoiceList;
-  late List<Item> itemsList = [];
-  late String invoiceId = "";
+  List<Item> itemsList = [];
+   String invoiceId = "";
   String invoiceName = "";
   String price = "";
   DateTime createdDate = DateTime.now();
-  late DateTime dueDate = DateTime.now();
-  late String dueTerms = "";
+  DateTime dueDate = DateTime.now();
+   String dueTerms = "";
   int clientPhone = 0;
   String clientBillingAddress = "";
   String clientShippingAddress = "";
@@ -105,13 +111,10 @@ class _IdinfoState extends ConsumerState<Idinfo> {
         MaterialPageRoute(
             builder: (context) => InvoicePdf(
                   invoiceId: invoiceId,
-                  // Assuming `invoiceId` and similar fields are non-nullable.
                   invoiceName: invoiceName,
                   dueTerms: dueTerms,
                   createdDate: createdDate,
-                  // Assuming `createdDate` is a DateTime and thus non-nullable.
                   dueDate: dueDate,
-                  // Same assumption as `createdDate`.
                   businessName: businessName,
                   businessWebsite: businessWebsite,
                   businessEmailAddress: businessEmailAddress,
@@ -122,40 +125,18 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                   clientBillingAddress: clientBillingAddress,
                   clientEmailAddress: clientEmailAddress,
                   discount: discount,
-                  // Assuming `discount`, `tax`, `shipping` are non-nullable (e.g., of type double).
                   tax: tax,
                   shipping: shipping,
                   itemList: itemsList,
                 )),
       );
-      // Invoice invoiceData = Invoice(
-      //   invoiceId,
-      //   0,
-      //   invoiceName,
-      //   price,
-      //   false,
-      //   createdDate,
-      //   dueDate,
-      //   dueTerms,
-      //   businessName,
-      //   businessEmailAddress,
-      //   businessPhone,
-      //   businessBillingAddress,
-      //   businessWebsite,
-      //   clientName,
-      //   clientEmailAddress,
-      //   clientBillingAddress,
-      //   clientPhone,
-      //   clientShippingAddress,
-      //   discount,
-      //   shipping,
-      //   tax,
-      // );
-      ref.read(invoiceInfoProvider.notifier).createInvoice();
-      // ref.read(invoiceDetailsProvider.notifier).createInvoice(invoiceData);
+
+      print("create checking");
+      ref.read(invoiceInfoProvider.notifier).createInvoice(ref.read(authUserDetailsProvider.notifier).getAuthUserDetails().id);
       for (var item in itemsList) {
         ref.read(itemDetailsProvider.notifier).createItem(item);
-        ref.read(invoiceDetailsProvider.notifier).getInvoice();
+        ref.read(invoiceDetailsProvider.notifier).getInvoice(ref.read(authUserDetailsProvider.notifier).getAuthUserDetails().id);
+
       }
       setState(() {});
     } else {
@@ -174,6 +155,7 @@ class _IdinfoState extends ConsumerState<Idinfo> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(localizationProvider);
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -208,7 +190,7 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         Padding(
                           padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
-                            invoiceId.isNotEmpty ? invoiceId : 'Invoice Number',
+                            invoiceId.isNotEmpty ? invoiceId : AppLocalizations.of(context)!.invoicenumber,
                             style: TextStyle(
                               fontSize: invoiceId.isNotEmpty ? 35.0 : 25.0,
                               color: Colors.black,
@@ -219,7 +201,7 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         Padding(
                           padding: const EdgeInsets.only(left: 20.0),
                           child: Text(
-                            invoiceName.isNotEmpty ? invoiceName : 'Name',
+                            invoiceName.isNotEmpty ? invoiceName : AppLocalizations.of(context)!.name,
                             style: const TextStyle(
                               fontSize: 16.0,
                               color: Colors.black,
@@ -327,11 +309,11 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                     child: Icon(Icons.mail_outline, size: 23.0),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Padding(
+                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 05.0, bottom: 05.0),
                                     child: Text(
-                                      'From',
+                                       AppLocalizations.of(context)!.all,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -393,11 +375,11 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                   ),
                                 ],
                               ),
-                              const Row(
+                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  SizedBox(width: 2.0),
-                                  Text('Add Business'),
+                                  const SizedBox(width: 2.0),
+                                  Text(AppLocalizations.of(context)!.addbusiness),
                                 ],
                               ),
                             ],
@@ -422,12 +404,12 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                   // Icon with specific padding
                                   const SizedBox(width: 8.0),
                                   // Space between icon and text
-                                  const Padding(
+                                   Padding(
                                     padding:
-                                        EdgeInsets.only(top: 16.0, bottom: 1.0),
+                                        const EdgeInsets.only(top: 16.0, bottom: 1.0),
                                     child: Text(
-                                      'Bill To',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!.billto,
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -495,12 +477,12 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                   ),
                                 ],
                               ),
-                              const Row(
+                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(width: 3.0),
                                   // Offset to align text under the first one
-                                  Text('Add Client'),
+                                  Text(AppLocalizations.of(context)!.addclient),
                                 ],
                               ),
                             ],
@@ -536,12 +518,12 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Row(
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.shopping_cart, color: Colors.black),
-                          SizedBox(width: 8.0),
-                          Text('Items', style: TextStyle(fontSize: 20.0)),
+                          const Icon(Icons.shopping_cart, color: Colors.black),
+                          const SizedBox(width: 8.0),
+                          Text(AppLocalizations.of(context)!.item, style: TextStyle(fontSize: 20.0)),
                         ],
                       ),
                       const SizedBox(height: 20.0),
@@ -606,12 +588,12 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: const Row(
+                          child:  Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Icon(Icons.add, color: Colors.black),
                               SizedBox(width: 8.0),
-                              Text('Add item',
+                              Text(AppLocalizations.of(context)!.additem,
                                   style: TextStyle(fontSize: 16.0)),
                             ],
                           ),
@@ -627,9 +609,9 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            const Text(
-                              'SubTotal',
-                              style: TextStyle(
+                             Text(
+                              AppLocalizations.of(context)!.quantity,
+                              style: const TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -647,14 +629,14 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         // Align items on both ends
                         children: <Widget>[
                           // Container for the discount icon and text on the left
-                          const Row(
+                           Row(
                             children: <Widget>[
-                              Icon(Icons.discount, color: Colors.black),
+                              const Icon(Icons.discount, color: Colors.black),
                               // Discount icon
-                              SizedBox(width: 8.0),
+                              const SizedBox(width: 8.0),
                               // Spacing between icon and text
-                              Text('Discount',
-                                  style: TextStyle(fontSize: 16.0)),
+                              Text(AppLocalizations.of(context)!.discount,
+                                  style: const TextStyle(fontSize: 16.0)),
                               // Discount text
                             ],
                           ),
@@ -677,7 +659,7 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                              'Discount',
+                                              AppLocalizations.of(context)!.discount,
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -761,13 +743,13 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         // Align items on both ends
                         children: <Widget>[
                           // Container for the discount icon and text on the left
-                          const Row(
+                           Row(
                             children: <Widget>[
-                              Icon(Icons.account_balance, color: Colors.black),
+                              const Icon(Icons.account_balance, color: Colors.black),
                               // Discount icon
-                              SizedBox(width: 8.0),
+                              const SizedBox(width: 8.0),
                               // Spacing between icon and text
-                              Text('Tax', style: TextStyle(fontSize: 16.0)),
+                              Text(AppLocalizations.of(context)!.tax, style: const TextStyle(fontSize: 16.0)),
                               // Discount text
                             ],
                           ),
@@ -790,7 +772,7 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text(
-                                                'Tax',
+                                                AppLocalizations.of(context)!.tax,
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.bold,
@@ -872,14 +854,14 @@ class _IdinfoState extends ConsumerState<Idinfo> {
                         // Align items on both ends
                         children: <Widget>[
                           // Container for the discount icon and text on the left
-                          const Row(
+                           Row(
                             children: <Widget>[
-                              Icon(Icons.local_shipping, color: Colors.black),
+                              const Icon(Icons.local_shipping, color: Colors.black),
                               // Discount icon
-                              SizedBox(width: 8.0),
+                              const SizedBox(width: 8.0),
                               // Spacing between icon and text
-                              Text('Shipping',
-                                  style: TextStyle(fontSize: 16.0)),
+                              Text(AppLocalizations.of(context)!.shipping,
+                                  style: const TextStyle(fontSize: 16.0)),
                               // Discount text
                             ],
                           ),

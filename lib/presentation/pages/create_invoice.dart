@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:invoice/presentation/widgets/new_invoice_details/id_invoice_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../widgets/about/invoice_creator_page.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
@@ -21,13 +24,19 @@ class _CreateScreenState extends State<CreateScreen> {
 
 
         ),
-        title: const Center(
-            child: Text("Create Invoice", style: TextStyle(fontSize: 30.0, color: Colors.black),)
+        title:  Center(
+            child: Text(AppLocalizations.of(context)!.createinvoice, style: TextStyle(fontSize: 30.0, color: Colors.black),)
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.info),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const InvoiceCreatorPage(), // Assuming 'John Doe' is the creator
+                ),
+              );
             },
           ),
         ],

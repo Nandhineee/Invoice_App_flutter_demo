@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:invoice/domain/models/invoice_list.dart';
 import 'package:invoice/domain/models/user.dart';
 import 'package:invoice/presentation/providers/invoice_provider.dart';
 import 'package:invoice/presentation/providers/user_provider.dart';
@@ -126,6 +127,7 @@ class _LoginState extends ConsumerState<Login> {
                       backgroundColor: Colors.blue.shade900,
                       shadowColor: Colors.white,
                     ),
+
                     onPressed: () async {
                       // Show Lottie animation
                       showDialog(
@@ -169,7 +171,8 @@ class _LoginState extends ConsumerState<Login> {
                         Navigator.pop(context); // Close the Lottie animation dialog
 
                         if (ref.read(authUserDetailsProvider.notifier).getAuthUserDetails() is User) {
-                          await ref.read(invoiceDetailsProvider.notifier).getInvoice();
+                          await ref.read(invoiceDetailsProvider.notifier).getInvoice(
+                              ref.read(authUserDetailsProvider.notifier).getAuthUserDetails().id);
                           await ref.read(itemPriceProvider.notifier).storeItem();
                           Navigator.pushReplacement(
                             context,
@@ -184,6 +187,7 @@ class _LoginState extends ConsumerState<Login> {
                         Navigator.pop(context); // Close the Lottie animation dialog if validation fails
                       }
                     },
+
 
                     child: const Text(
                       'Login',

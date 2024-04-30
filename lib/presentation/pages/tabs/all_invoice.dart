@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:invoice/domain/models/invoice_list.dart';
-import 'package:invoice/domain/models/item.dart';
 import 'package:invoice/presentation/providers/invoice_provider.dart';
 import 'package:invoice/presentation/providers/item_price_provider.dart';
-import 'package:invoice/presentation/providers/item_provider.dart';
+
+
+import '../../providers/user_provider.dart';
 
 class AllInvoice extends ConsumerStatefulWidget {
   const AllInvoice({super.key});
@@ -29,6 +30,8 @@ class _Allinvoicestate extends ConsumerState<AllInvoice> {
   @override
   Widget build(BuildContext context) {
    invoiceData = ref.watch(invoiceDetailsProvider);
+   ref.read(invoiceDetailsProvider.notifier).getInvoice(
+       ref.read(authUserDetailsProvider.notifier).getAuthUserDetails().id);
 
 
     return Row(
@@ -39,7 +42,7 @@ class _Allinvoicestate extends ConsumerState<AllInvoice> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  // Temporary storage for the edited text
+
                   String editedText = invoiceData[index].invoiceName;
                   // Show dialog when list item is tapped
                   showDialog<String>(
@@ -152,8 +155,6 @@ class _Allinvoicestate extends ConsumerState<AllInvoice> {
                                       );
                                     },
                                   );
-
-                                  // If the user confirmed the deletion
                                   if (confirmDelete == true) {
                                     // Perform the deletion and other related operations
                                     await ref
@@ -161,7 +162,7 @@ class _Allinvoicestate extends ConsumerState<AllInvoice> {
                                         .deleteById(invoiceData[index].id);
                                     await ref
                                         .read(invoiceDetailsProvider.notifier)
-                                        .getInvoice();
+                                        .getInvoice(ref.read(authUserDetailsProvider.notifier).getAuthUserDetails().id);
                                     invoiceData = ref
                                         .read(invoiceDetailsProvider.notifier)
                                         .getInvoices();
@@ -171,18 +172,19 @@ class _Allinvoicestate extends ConsumerState<AllInvoice> {
                                     // and update the UI accordingly.
                                   }
                                 },
+
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(), // Define specific padding values as needed
+                              child: Text(
+                                '₹${double.parse(ref.read(itemPriceProvider.notifier).getPrice(invoiceData[index].id)).round()}',
+                                style: const TextStyle(fontSize: 15.0),
                               ),
                             ),
 
-                            Padding(
-                              padding: const EdgeInsets.only(), // Make sure to define padding values if needed
-                              child: Text(
 
-                                ref.read(itemPriceProvider.notifier).getPrice(invoiceData[index].id),
 
-                                style: const TextStyle(fontSize: 15.0),
-                              ),
-                            )
 
                           ],
                         ),

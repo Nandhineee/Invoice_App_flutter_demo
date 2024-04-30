@@ -1,5 +1,6 @@
 import 'package:invoice/data/datasource/local/invoice_data_source.dart';
 import 'package:invoice/domain/models/invoice_list.dart';
+import 'package:invoice/domain/models/user.dart';
 import 'package:invoice/domain/repositories/invoice_repository.dart';
 
 class InvoiceRepositoryImpl extends InvoiceRepository {
@@ -12,7 +13,6 @@ class InvoiceRepositoryImpl extends InvoiceRepository {
 
 
     bool? result = await invoiceDataSource.insertInvoiceData(invoice);
-
     if (result!) {
       return true;
     } else {
@@ -21,8 +21,8 @@ class InvoiceRepositoryImpl extends InvoiceRepository {
   }
 
   @override
-  Future<List<Invoice>?> getInvoice() async {
-    List<Invoice>? result = await invoiceDataSource.getInvoice();
+  Future<List<Invoice>?> getInvoice(int id) async {
+    List<Invoice>? result = await invoiceDataSource.getInvoice(id);
     if (result!.isNotEmpty) {
       return result;
     }

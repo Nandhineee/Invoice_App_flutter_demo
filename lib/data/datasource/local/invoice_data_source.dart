@@ -18,7 +18,6 @@ class InvoiceDataSource {
   }
 
   Future<bool?> insertItemData(Item item) async {
-    // Get a reference to the database.
     final Database db = DatabaseHelper.database!;
     final itemMap = item.toJson();
 
@@ -35,12 +34,14 @@ class InvoiceDataSource {
     return null;
   }
 
-  Future<List<Invoice>?> getInvoice() async {
+
+
+  Future<List<Invoice>?> getInvoice(int uid ) async {
     List<Invoice> invoices = [];
     Database? dbClient = DatabaseHelper.database;
     if (dbClient != null) {
       List<Map<String, dynamic>> result =
-          await dbClient.rawQuery("select * from $invoiceTableName");
+      await dbClient.rawQuery('''select * from $invoiceTableName WHERE $id="$uid";''');
       for (var res in result) {
         invoices.add(Invoice.fromJson(res));
       }

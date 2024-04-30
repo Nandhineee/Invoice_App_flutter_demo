@@ -10,15 +10,15 @@ class DatabaseHelper {
 
   Future<Database> get db async {
     final path = await getDatabasesPath();
-    final databasePath = join(path, "invoice_app.db");
-      await deleteDatabase(databasePath);
+          final databasePath = join(path, "invoice_app.db");
+          await deleteDatabase(databasePath);
     if (database != null) {
       return database!;
     }
-      database = await initDatabase();
-     loadUserDetails();
-    loadInvoiceDetails();
-    loadItemDetails();
+    database = await initDatabase();
+    //  loadUserDetails();
+    // loadInvoiceDetails();
+    // loadItemDetails();
     return database!;
   }
 
@@ -66,9 +66,9 @@ class DatabaseHelper {
         '''CREATE TABLE $userTableName ($userId INTEGER PRIMARY KEY,$userPassword TEXT,
         $userName TEXT,$userEmail TEXT);''');
     await db.execute('''CREATE TABLE $invoiceTableName( 
+     $id INTEGER,
       $invoiceId TEXT,
-            $invoiceTableId INTEGER PRIMARY KEY AUTOINCREMENT,
-
+      $invoiceTableId INTEGER PRIMARY KEY AUTOINCREMENT,
       $invoiceCreateName TEXT,
       $invoicePrice TEXT ,
       $invoicePaid INTEGER,
@@ -94,7 +94,8 @@ class DatabaseHelper {
         '''CREATE TABLE $itemTableName ($invoiceId TEXT ,$itemId INTEGER PRIMARY KEY AUTOINCREMENT,
         $itemName TEXT,$itemPrice INTEGER,$itemQuantity INTEGER,$itemDiscount INTEGER,
         $itemTax INTEGER,
-        FOREIGN KEY (invoiceId) REFERENCES $invoiceTableName($invoiceId));''');
+        FOREIGN KEY (invoiceId) REFERENCES $invoiceTableName($invoiceId)
+        );''');
   }
 
 

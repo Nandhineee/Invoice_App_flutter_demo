@@ -1,6 +1,28 @@
 {
   "title_message": "Facture",
-  "all": "Toute",
-  "paid": "Payé",
-  "unpaid": "Non Payé"
+  "all": "Tous",
+  "paid": "payé",
+  "unpaid": "impayé",
+  "tax": "Taxe",
+  "discount": "Remise",
+  "shipping": "Expédition",
+  "Add business": "Ajouter une entreprise",
+  "client": "Client",
+  "about": "Ceci est une page d exemple de création de facture. Ici, vous pouvez saisir tous les détails nécessaires pour créer une facture, y compris le numéro, la date, les informations client (nom, adresse, coordonnées), les articles (description, quantité, prix unitaire) et le taux de TVA (si applicable).",
+  "createinvoice":"Créer une facture",
+
+
+
+
+
+
+
+  "invoicenumber":"Numéro de facture",
+  "name":"Nom",
+  "addbusiness":"Ajouter une entreprise",
+  "billto":"Facturer à",
+  "addclient":"Ajouter un client",
+  "item":"Articles",
+  "additem":"Ajouter un article",
+  "quantity":"Quantité"
 }

@@ -116,7 +116,7 @@ class _UnpaidState extends ConsumerState<Unpaid> {
                           Padding(
                             padding: const EdgeInsets.only(),
                             child: Text(
-              ref.read(itemPriceProvider.notifier).getPrice(unpaidInvoices[index].id),
+                              '₹${double.parse(ref.read(itemPriceProvider.notifier).getPrice(unpaidInvoices[index].id)).round()}',
                               style: const TextStyle(
                                 fontSize: 15.0, // You can adjust the size as per your need
                               ),

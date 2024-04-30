@@ -33,6 +33,6 @@ class User {
 }
 
 List<User> userDetails = [
-  User(01, 'user', 'user@gmail.com', 'user'),
-  User(02, 'divya', 'div@gmail.com', 'divya')
+  User(1, 'user', 'user@gmail.com', 'user'),
+  User(2, 'divya', 'div@gmail.com', 'divya')
 ];

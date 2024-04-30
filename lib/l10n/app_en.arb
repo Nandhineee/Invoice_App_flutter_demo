@@ -2,5 +2,19 @@
   "title_message": "Invoice",
   "all": "All",
   "paid": "paid",
-  "unpaid": "unpaid"
+  "unpaid": "unpaid",
+  "tax":"Tax",
+  "discount":"Discount",
+  "shipping":"Shipping",
+  "addbusiness":"Add Business",
+  "client":"Client",
+  "about":"This is a sample invoice creation page. Here, you can enter all the necessary details to create an invoice, including invoice number, date, client information, invoice items, and tax rate (if applicable). Once you have filled in all the information, you can submit the form to generate the invoice.",
+  "createinvoice":"Create Invoice",
+  "invoicenumber":"Invoice Number",
+  "name":"Name",
+  "billto":"Bill To",
+  "addclient":"Add client",
+  "item":"Items",
+  "additem":"Add item",
+  "quantity":"Quantity"
 }

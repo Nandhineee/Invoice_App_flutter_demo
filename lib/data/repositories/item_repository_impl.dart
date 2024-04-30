@@ -1,37 +1,3 @@
-// import 'package:invoice/data/datasource/local/invoice_data_source.dart';
-// import 'package:invoice/domain/models/invoice_list.dart';
-// import 'package:invoice/domain/repositories/invoice_repository.dart';
-// class ItemRepositoryImpl extends ItemRepositoryImpl {
-
-
-
-
-  // final InvoiceDataSource invoiceDataSource;
-  //
-  // InvoiceRepositoryImpl(this.invoiceDataSource);
-  //
-  //
-  //
-  //
-  //
-  //
-  // @override
-  // Future<bool> invoice(Invoice invoice) async {
-  //   print(invoice);
-  //
-  //   bool? result = await invoiceDataSource.insertInvoiceData( invoice);
-  //
-  //   if (result!) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-
-//
-
-
 import 'package:invoice/data/datasource/local/invoice_data_source.dart';
 import 'package:invoice/domain/models/item.dart';
 import 'package:invoice/domain/repositories/item_repository.dart';
